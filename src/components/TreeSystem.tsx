@@ -241,7 +241,7 @@ const TreeSystem: React.FC = () => {
       const chaosY = r * Math.sin(phi) * Math.sin(theta) * 0.6; // Y轴压扁一点，形成椭球
       const chaosZ = r * Math.cos(phi);
 
-      const imageUrl = `/photos/${fileName}`;
+      const imageUrl = `${import.meta.env.BASE_URL}photos/${fileName}`;
 
       photos.push({
         id: `photo-${i}`,
@@ -261,7 +261,7 @@ const TreeSystem: React.FC = () => {
         color: 'white'
       });
     }
-    return { foliageData: { current: foliage, chaos: foliageChaos, tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
+    return { foliageData: { current: foliage, chaos: foliageChaos,tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
   }, []);
 
   useEffect(() => {
@@ -434,7 +434,7 @@ const TreeSystem: React.FC = () => {
             rotation={obj.rot}
             scale={obj.scale}
             id={obj.id}
-            shouldLoad={index < loadedCount}
+            shouldLoad={index <loadedCount}
             year={obj.data.year}
           />
 
@@ -447,7 +447,7 @@ const TreeSystem: React.FC = () => {
                 fontSize={0.18}
                 maxWidth={1.2} // Allow full width
                 color="#000000"
-                font="/fonts/Cinzel-Bold.ttf"
+                font={`${import.meta.env.BASE_URL}fonts/Cinzel-Bold.ttf`}
                 characters="0123456789-"
                 anchorX="center"
                 anchorY="bottom"
@@ -460,7 +460,7 @@ const TreeSystem: React.FC = () => {
                 fontSize={0.18} // Very small
                 maxWidth={1.2}
                 color="#ffd700" // Gold
-                font="/fonts/Cinzel-Bold.ttf"
+                font={`${import.meta.env.BASE_URL}fonts/Cinzel-Bold.ttf`}
                 characters="0123456789-"
                 anchorX="center"
                 anchorY="bottom"
