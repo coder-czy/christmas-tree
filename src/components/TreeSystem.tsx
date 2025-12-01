@@ -261,7 +261,7 @@ const TreeSystem: React.FC = () => {
         color: 'white'
       });
     }
-    return { foliageData: { current: foliage, chaos: foliageChaos, tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
+    return { foliageData: { current: foliage, chaos: foliageChaos,tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
   }, []);
 
   useEffect(() => {
@@ -434,7 +434,7 @@ const TreeSystem: React.FC = () => {
             rotation={obj.rot}
             scale={obj.scale}
             id={obj.id}
-            shouldLoad={index < loadedCount}
+            shouldLoad={index <loadedCount}
             year={obj.data.year}
           />
 
