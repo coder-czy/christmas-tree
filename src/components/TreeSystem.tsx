@@ -188,20 +188,16 @@ const TreeSystem: React.FC = () => {
     for (let i = 0; i < lightCount * 3; i++) lightChaos[i] = lSphere[i];
     for (let i = 0; i < lightCount; i++) { const i3 = i * 3; const t = i / lightCount; const h = t * 13; const coneRadius = (14 - h) * 0.48; const angle = t * Math.PI * 25; lightTree[i3] = Math.cos(angle) * coneRadius; lightTree[i3 + 1] = h - 6; lightTree[i3 + 2] = Math.sin(angle) * coneRadius; }
 
-    // 实际存在的照片文件列表
-    const photoFiles = [
-      "2024_06_1.jpg", "2024_07_1.jpg", "2024_07_2.jpg",
-      "2024_09_1.jpg", "2024_09_2.jpg", "2024_09_3.jpg",
-      "2024_09_4.jpg", "2024_09_5.jpg", "2024_09_6.jpg",
-      "2024_10_1.jpg", "2024_11_1.jpg", "2024_12_1.jpg",
-      "2024_12_2.jpg", "2024_12_3.jpg", "2025_01_1.jpg",
-      "2025_01_2.jpg", "2025_01_3.jpg", "2025_01_4.jpg",
-      "2025_01_5.jpg", "2025_01_6.jpg", "2025_01_7.jpg",
-      "2025_02_1.jpg", "2025_05_1.jpg", "2025_06_1.jpg",
-      "2025_06_2.jpg", "2025_06_3.jpg", "2025_09_1.jpg",
-      "2025_10_1.jpg", "2025_10_2.jpg", "2025_11_1.jpg",
-      "2025_11_2.jpg"
-    ];
+    // 动态获取 public/photos 下的所有 jpg 文件
+    // 注意：import.meta.glob 返回的键是相对于当前文件的路径或绝对路径
+    // 我们使用 eager: true 来直接获取模块（虽然这里我们只需要路径）
+    // 对于 public 文件夹中的文件，我们需要指向正确的位置
+    const photoModules = import.meta.glob('../../public/photos/*.jpg');
+
+    const photoFiles = Object.keys(photoModules).map(path => {
+      // path 类似于 "../../public/photos/2024_06_1.jpg"
+      return path.split('/').pop() || "";
+    }).filter(name => name !== "");
 
     // 按时间排序
     photoFiles.sort();
@@ -261,7 +257,7 @@ const TreeSystem: React.FC = () => {
         color: 'white'
       });
     }
-    return { foliageData: { current: foliage, chaos: foliageChaos,tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
+    return { foliageData: { current: foliage, chaos: foliageChaos, tree: foliageTree, sizes }, photosData: photos, lightsData: { chaos: lightChaos, tree: lightTree, count: lightCount } };
   }, []);
 
   useEffect(() => {
@@ -434,7 +430,7 @@ const TreeSystem: React.FC = () => {
             rotation={obj.rot}
             scale={obj.scale}
             id={obj.id}
-            shouldLoad={index <loadedCount}
+            shouldLoad={index < loadedCount}
             year={obj.data.year}
           />
 
