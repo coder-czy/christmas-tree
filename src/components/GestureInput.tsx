@@ -59,11 +59,11 @@ const GestureInput: React.FC = () => {
         // 2. Start MediaPipe Loading (Parallel)
         const recognizerPromise = (async () => {
           const vision = await FilesetResolver.forVisionTasks(
-            "/wasm"
+            `${import.meta.env.BASE_URL}wasm`
           );
           return GestureRecognizer.createFromOptions(vision, {
             baseOptions: {
-              modelAssetPath: "/models/gesture_recognizer.task",
+              modelAssetPath: `${import.meta.env.BASE_URL}models/gesture_recognizer.task`,
               delegate: "GPU"
             },
             runningMode: "VIDEO",
